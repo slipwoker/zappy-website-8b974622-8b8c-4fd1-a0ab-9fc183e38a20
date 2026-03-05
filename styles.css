@@ -5687,6 +5687,166 @@ body.accessibility-widget-visible ._access-menu {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   V2 REGENERATED SECTION CSS (בית-services)
+   Added: 2026-03-05T20:50:18.145Z
+   ═══════════════════════════════════════════════════════════ */
+.index-services-section {
+  position: relative;
+  background: linear-gradient(180deg, #FAF6F0 0%, #EFE7DC 100%);
+  color: var(--text-dark);
+  padding: 80px 16px;
+  overflow: visible;
+}
+
+.index-services-section .index-services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.index-services-section .index-services-header {
+  text-align: center;
+  margin-bottom: 60px;
+  max-width: 800px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.index-services-section .index-services-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.index-services-section .index-services-intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-dark);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.index-services-section .index-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  direction: rtl;
+}
+
+.index-services-section .index-services-card {
+  background: #F7F3ED;
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid rgba(226, 216, 203, 0.9);
+  box-shadow: 0 10px 22px rgba(45, 43, 40, 0.10);
+  text-align: right;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.index-services-section .index-services-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(74, 124, 155, 0.15) 0%, rgba(201, 106, 74, 0.15) 100%);
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.index-services-section .index-services-card:hover::before {
+  opacity: 1;
+}
+
+.index-services-section .index-services-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(45, 43, 40, 0.14);
+}
+
+.index-services-section .index-services-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, rgba(74, 124, 155, 0.12) 0%, rgba(91, 109, 58, 0.12) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-inline-start: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.index-services-section .index-services-icon-wrapper svg {
+  width: 32px;
+  height: 32px;
+  color: var(--primary);
+}
+
+.index-services-section .index-services-card h3 {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.index-services-section .index-services-card p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-dark);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .index-services-section {
+    padding: 60px 16px;
+  }
+
+  .index-services-section .index-services-header {
+    margin-bottom: 40px;
+  }
+
+  .index-services-section .index-services-header h2 {
+    font-size: 26px;
+  }
+
+  .index-services-section .index-services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .index-services-section .index-services-card {
+    padding: 24px 20px;
+  }
+
+  .index-services-section .index-services-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .index-services-section .index-services-icon-wrapper svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .index-services-section .index-services-card h3 {
+    font-size: 20px;
+  }
+}
+
 /* ========== RTL MOBILE NAVBAR FIX (zappy-rtl-mobile-fix) ========== */
 /* High-specificity rules to ensure RTL positioning wins over any [lang="en"] conflicts */
 /* For RTL sites: hamburger on RIGHT, phone on LEFT (mirror of LTR layout) */

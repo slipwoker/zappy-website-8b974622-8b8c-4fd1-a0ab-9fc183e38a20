@@ -234,6 +234,165 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
     <!-- Mickidum Accessibility Toolbar -->
     <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+
+<style data-zappy-section-v2-css="true">
+/* V2 Regenerated Section CSS */
+.index-services-section {
+  position: relative;
+  background: linear-gradient(180deg, #FAF6F0 0%, #EFE7DC 100%);
+  color: var(--text-dark);
+  padding: 80px 16px;
+  overflow: visible;
+}
+
+.index-services-section .index-services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.index-services-section .index-services-header {
+  text-align: center;
+  margin-bottom: 60px;
+  max-width: 800px;
+  margin-inline-start: auto;
+  margin-inline-end: auto;
+}
+
+.index-services-section .index-services-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.index-services-section .index-services-intro {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-dark);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.index-services-section .index-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  direction: rtl;
+}
+
+.index-services-section .index-services-card {
+  background: #F7F3ED;
+  border-radius: 16px;
+  padding: 32px 24px;
+  border: 1px solid rgba(226, 216, 203, 0.9);
+  box-shadow: 0 10px 22px rgba(45, 43, 40, 0.10);
+  text-align: right;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.index-services-section .index-services-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, rgba(74, 124, 155, 0.15) 0%, rgba(201, 106, 74, 0.15) 100%);
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.index-services-section .index-services-card:hover::before {
+  opacity: 1;
+}
+
+.index-services-section .index-services-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(45, 43, 40, 0.14);
+}
+
+.index-services-section .index-services-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, rgba(74, 124, 155, 0.12) 0%, rgba(91, 109, 58, 0.12) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-inline-start: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.index-services-section .index-services-icon-wrapper svg {
+  width: 32px;
+  height: 32px;
+  color: var(--primary);
+}
+
+.index-services-section .index-services-card h3 {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.index-services-section .index-services-card p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-dark);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .index-services-section {
+    padding: 60px 16px;
+  }
+
+  .index-services-section .index-services-header {
+    margin-bottom: 40px;
+  }
+
+  .index-services-section .index-services-header h2 {
+    font-size: 26px;
+  }
+
+  .index-services-section .index-services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .index-services-section .index-services-card {
+    padding: 24px 20px;
+  }
+
+  .index-services-section .index-services-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .index-services-section .index-services-icon-wrapper svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .index-services-section .index-services-card h3 {
+    font-size: 20px;
+  }
+}
+</style>
     <link rel="stylesheet" href="/styles.css">
 
     <style id="zappy-dropdown-submenu-styles">
@@ -292,16 +451,16 @@
 
   <nav class="navbar" dir="rtl">
   <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
-    <svg class="hamburger-icon" width="24" height="24" viewbox="0 0 24 24" fill="none">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
     </svg>
-    <svg class="close-icon" width="24" height="24" viewbox="0 0 24 24" fill="none" style="display:none;">
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display:none;">
       <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
     </svg>
   </button>
   
   <button class="phone-header-btn" aria-label="Call">
-    <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
     </svg>
   </button>
@@ -339,7 +498,7 @@
     </div>
   </div>
   <div class="index-hero-section__divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 80" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="index-hero-wave-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" style="stop-color:var(--bg-light);stop-opacity:1"></stop>
@@ -352,62 +511,63 @@
   </div>
 </section>
 
-<section class="index-services-section" data-layout-spec="בית-services">
+<section class="index-services-section" data-layout-spec="בית-services" data-zappy-section="true">
   <div class="index-services-container">
-    <div class="index-services-intro">
+    <div class="index-services-header">
       <h2>כיסוי מלא: מים + בטיחות אש</h2>
-      <p>קבלן אחד אחראי לכל המערכות הקריטיות שלכם – התקנה, שדרוגים, בדיקות ותחזוקה שוטפת. אנחנו מבטיחים רציפות תפעולית, תיעוד מסודר ותגובה מהירה בכל שלב.</p>
+      <p class="index-services-intro">קבלן אחד אחראי לכל המערכות הקריטיות שלכם – התקנה, שדרוגים, בדיקות ותחזוקה שוטפת. אנחנו מבטיחים רציפות תפעולית, תיעוד מסודר ותגובה מהירה בכל שלב.</p>
     </div>
+
     <div class="index-services-grid">
-      <div class="index-services-card">
-        <div class="index-services-card-header">
-          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.69L12 21.31M12 2.69C10.5 4.5 9 7 9 10C9 13 10.34 15 12 15C13.66 15 15 13 15 10C15 7 13.5 4.5 12 2.69Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <article class="index-services-card">
+        <div class="index-services-icon-wrapper">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4L8 12V22C8 32 14 40 24 44C34 40 40 32 40 22V12L24 4Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M20 24L22.5 26.5L28 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <h3>תשתיות אינסטלציה</h3>
         </div>
-        <p>עמודי הזנה, קווים ראשיים, ויסות לחץ והפחתת נזילות.<br>התקנת מערכות מים חמים וקרים בכל קנה מידה.<br>שדרוג צנרת ישנה והתאמה לתקינה עדכנית.</p>
-      </div>
-      <div class="index-services-card">
-        <div class="index-services-card-header">
-          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L9.5 7L4 8L8 12L7 17.5L12 15L17 17.5L16 12L20 8L14.5 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            <path d="M12 8V15M9 11L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        <h3>תשתיות אינסטלציה</h3>
+        <p>עמודי הזנה, קווים ראשיים, ויסות לחץ והפחתת נזילות.התקנת מערכות מים חמים וקרים בכל קנה מידה.שדרוג צנרת ישנה והתאמה לתקינה עדכנית.</p>
+      </article>
+
+      <article class="index-services-card">
+        <div class="index-services-icon-wrapper">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4V44M24 4C28 8 32 12 32 18C32 24 28 28 24 32M24 4C20 8 16 12 16 18C16 24 20 28 24 32M24 32V44" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="24" cy="18" r="3" fill="currentColor"></circle>
+            <path d="M12 38H36M14 42H34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
           </svg>
-          <h3>מערכות כיבוי אש</h3>
         </div>
-        <p>התקנת מערכות ספרינקלרים תעשייתיים, שסתומים ותיאום משאבות.<br>בדיקות תקופתיות ותחזוקה מונעת למערכות קיימות.<br>תיעוד מלא של כל מרכיבי המערכת והיסטוריית תחזוקה.</p>
-      </div>
-      <div class="index-services-card">
-        <div class="index-services-card-header">
-          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 6V12L16 14M22 12C22 17.523 17.523 22 12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <h3>מערכות כיבוי אש</h3>
+        <p>התקנת מערכות ספרינקלרים תעשייתיים, שסתומים ותיאום משאבות.בדיקות תקופתיות ותחזוקה מונעת למערכות קיימות.תיעוד מלא של כל מרכיבי המערכת והיסטוריית תחזוקה.</p>
+      </article>
+
+      <article class="index-services-card">
+        <div class="index-services-icon-wrapper">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="10" width="32" height="28" rx="2" stroke="currentColor" stroke-width="2.5"></rect>
+            <path d="M16 10V6C16 4.89543 16.8954 4 18 4H30C31.1046 4 32 4.89543 32 6V10" stroke="currentColor" stroke-width="2.5"></path>
+            <path d="M8 18H40" stroke="currentColor" stroke-width="2.5"></path>
+            <circle cx="24" cy="26" r="3" stroke="currentColor" stroke-width="2.5"></circle>
+            <path d="M24 29V32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
           </svg>
-          <h3>תחזוקה ושירות</h3>
         </div>
-        <p>תוכניות תחזוקה מונעת מותאמות אישית לכל מתקן.<br>תיאום תגובה מהירה לקריאות חירום ותקלות דחופות.<br>ניהול תיעוד דיגיטלי ומעקב אחר כל פעולת שירות.</p>
-      </div>
-      <div class="index-services-card">
-        <div class="index-services-card-header">
-          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 12L11 14L15 10M21 12C21 16.971 16.971 21 12 21C7.029 21 3 16.971 3 12C3 7.029 7.029 3 12 3C16.971 3 21 7.029 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        <h3>תחזוקה ושירות</h3>
+        <p>תוכניות תחזוקה מונעת מותאמות אישית לכל מתקן.תיאום תגובה מהירה לקריאות חירום ותקלות דחופות.ניהול תיעוד דיגיטלי ומעקב אחר כל פעולת שירות.</p>
+      </article>
+
+      <article class="index-services-card">
+        <div class="index-services-icon-wrapper">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="8" width="36" height="32" rx="2" stroke="currentColor" stroke-width="2.5"></rect>
+            <path d="M6 16H42" stroke="currentColor" stroke-width="2.5"></path>
+            <path d="M14 24L20 30L34 22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <h3>בדיקות ותמיכה בעמידה בתקן</h3>
         </div>
-        <p>הכנה לביקורות ובדיקות רגולטוריות של מערכות אש ומים.<br>ביצוע פעולות מתקנות ותיקון ליקויים שנמצאו.<br>עדכון תוכניות as-built ותיעוד טכני מלא לכל שינוי.</p>
-      </div>
+        <h3>בדיקות ותמיכה בעמידה בתקן</h3>
+        <p>הכנה לביקורות ובדיקות רגולטוריות של מערכות אש ומים.ביצוע פעולות מתקנות ותיקון ליקויים שנמצאו.עדכון תוכניות as-built ותיעוד טכני מלא לכל שינוי.</p>
+      </article>
     </div>
-  </div>
-  <div class="index-services-divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 60" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <pattern id="dotted-grain-services" x="0" y="0" width="4" height="4" patternunits="userSpaceOnUse">
-          <circle cx="2" cy="2" r="0.5" fill="rgba(226,216,203,0.4)"></circle>
-        </pattern>
-      </defs>
-      <path d="M0,60 L0,30 L1200,50 L1200,60 Z" fill="#FAF6F0"></path>
-      <path d="M0,60 L0,30 L1200,50 L1200,60 Z" fill="#FAF6F0"></path>
-    </svg>
   </div>
 </section>
 
@@ -449,7 +609,7 @@
   </div>
   
   <div class="index-case-studies-divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 80" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,80 L0,50 Q200,45 400,50 T800,50 Q1000,45 1200,50 L1200,80 Z" fill="#FAF6F0"></path>
     </svg>
   </div>
@@ -467,7 +627,7 @@
         <div class="index-faq-section__accordion-item">
           <button class="index-faq-section__accordion-trigger" aria-expanded="false">
             <span class="index-faq-section__question">מהם זמני התגובה ואיזורי השירות שלכם?</span>
-            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -479,7 +639,7 @@
         <div class="index-faq-section__accordion-item">
           <button class="index-faq-section__accordion-trigger" aria-expanded="false">
             <span class="index-faq-section__question">מה כולל ביקורת תקופתית של מערכות האינסטלציה ובטיחות האש?</span>
-            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -491,7 +651,7 @@
         <div class="index-faq-section__accordion-item">
           <button class="index-faq-section__accordion-trigger" aria-expanded="false">
             <span class="index-faq-section__question">איך מתועדות פעולות תיקון ותחזוקה?</span>
-            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -503,7 +663,7 @@
         <div class="index-faq-section__accordion-item">
           <button class="index-faq-section__accordion-trigger" aria-expanded="false">
             <span class="index-faq-section__question">איך מתואם השירות עם הנהלת הבניין?</span>
-            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -515,7 +675,7 @@
         <div class="index-faq-section__accordion-item">
           <button class="index-faq-section__accordion-trigger" aria-expanded="false">
             <span class="index-faq-section__question">מהם הסימנים לבעיות לחץ או שסתומים במערכת?</span>
-            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -527,7 +687,7 @@
         <div class="index-faq-section__accordion-item">
           <button class="index-faq-section__accordion-trigger" aria-expanded="false">
             <span class="index-faq-section__question">איך שומרים על תקינות המערכות לאורך כל השנה?</span>
-            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
             </svg>
           </button>
@@ -551,7 +711,7 @@
   </div>
 
   <div class="index-faq-section__divider-wrapper">
-    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 100" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewBox="0 0 1200 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="faq-divider-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" style="stop-color:#FAF6F0;stop-opacity:1"></stop>
