@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>מערכות כיבוי אש למפעלים מתקדמות — מרון פרויקטים ומערכות</title>
+    <meta name="description" content="התקנה ותחזוקה של מערכות כיבוי אש תעשייתיות ואינסטלציה מקצועית למפעלים ועסקים. פתרונות בטיחות אש מותאמים אישית עם ניסיון רב שנים בתשתיות קריטיות.">
+    <meta name="keywords" content="מערכות כיבוי אש למפעלים, אינסטלציה תעשייתית ישראל, מערכות כיבוי אש, התקנת ספרינקלרים, בטיחות אש תעשייתית">
+    
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: '8b974622-8b8c-4fd1-a0ab-9fc183e38a20',
+    apiUrl: 'https://api.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        trackEvent('click', {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        });
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        trackEvent('navigation', {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        });
+      }
+    }, true);
+  }
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="מערכות כיבוי אש למפעלים מתקדמות — מרון פרויקטים ומערכות">
+  <meta property="og:description" content="התקנה ותחזוקה של מערכות כיבוי אש תעשייתיות ואינסטלציה מקצועית למפעלים ועסקים. פתרונות בטיחות אש מותאמים אישית עם ניסיון רב שנים בתשתיות קריטיות.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="he_IL">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="מערכות כיבוי אש למפעלים מתקדמות — מרון פרויקטים ומערכות">
+  <meta name="twitter:description" content="התקנה ותחזוקה של מערכות כיבוי אש תעשייתיות ואינסטלציה מקצועית למפעלים ועסקים. פתרונות בטיחות אש מותאמים אישית עם ניסיון רב שנים בתשתיות קריטיות.">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: #333 !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))), .sub-menu:not(:has(li)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .sub-menu.mobile-expanded { max-height: 500px !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-dark) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-dark) !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-dark) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      #mic-access-tool-general-button, .mic-access-tool-general-button,
+      #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+      ._access-icon, #mic-access-tool-box, .mic-access-tool-box,
+      #mic-init-access-tool #mic-access-tool-box, div[id*="mic-access-tool-box"], ._access-menu {
+        display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;
+      }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar" dir="rtl">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewbox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewbox="0 0 24 24" fill="none" style="display:none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" aria-label="Call">
+    <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+  
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link">
+        <img src="/assets/business-logo.webp" alt="מרון פרויקטים ומערכות" class="logo">
+      </a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="/services">שירותים</a></li><li><a href="/projects">פרויקטים</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="/contact" class="nav-cta-btn">צור קשר</a>
+    </div>
+  </div>
+</nav>
+  
+  <main>
+    <section class="index-hero-section" data-layout-spec="בית-hero" data-hero-type="fullscreen-scrim">
+  <div class="index-hero-section__bg-wrapper">
+    <img data-hero-bg="true" data-placeholder="index-hero-bg" data-context="Professional Israeli plumber or fire safety technician in work uniform inspecting a clean, modern sprinkler manifold valve assembly mounted on a wall in a well-lit building utility room. The technician is focused on checking the brass valves and pressure gauges. The environment is tidy with white walls, organized pipes, and warm ambient lighting. The scene conveys professionalism, safety compliance, and technical expertise in plumbing and fire suppression systems." width="1920" height="1080" src="/assets/site-index-hero-bg.webp" alt="טכנאי מערכות כיבוי אש בודק מערכת ספרינקלרים" class="index-hero-section__bg-image" data-preserve-bg="0">
+  </div>
+  <div class="index-hero-section__scrim" aria-hidden="true"></div>
+  <div class="index-hero-section__content">
+    <div class="index-hero-section__overlay-card">
+      <h1 class="index-hero-section__headline">מערכות אינסטלציה וכיבוי אש שאפשר לסמוך עליהן</h1>
+      <h3 class="index-hero-section__subtitle">התקנה ותחזוקה שוטפת של מערכות מים ומערכות כיבוי אש, עם דגש על עמידה בתקנות ותפעול רציף לאורך זמן.</h3>
+      <div class="index-hero-section__cta-row">
+        <a href="/contact" class="index-hero-section__btn index-hero-section__btn--primary">בקשת קריאת שירות</a>
+        <a href="/services" class="index-hero-section__btn index-hero-section__btn--secondary">השירותים שלנו</a>
+      </div>
+      <p class="index-hero-section__trust-line">התקנה, בדיקות תקופתיות ותחזוקה מונעת למבנים ומתקנים.</p>
+    </div>
+  </div>
+  <div class="index-hero-section__divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 80" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="index-hero-wave-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--bg-light);stop-opacity:1"></stop>
+          <stop offset="100%" style="stop-color:var(--bg-light);stop-opacity:0.95"></stop>
+        </linearGradient>
+      </defs>
+      <path d="M0,80 L0,48 Q100,42 200,48 T400,45 Q500,48 600,42 T800,48 Q900,45 1000,48 T1200,45 L1200,80 Z" fill="#FAF6F0"></path>
+      <path d="M0,80 L0,52 Q100,46 200,52 T400,49 Q500,52 600,46 T800,52 Q900,49 1000,52 T1200,49 L1200,80 Z" fill="#FAF6F0" opacity="0.6"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="index-services-section" data-layout-spec="בית-services">
+  <div class="index-services-container">
+    <div class="index-services-intro">
+      <h2>כיסוי מלא: מים + בטיחות אש</h2>
+      <p>קבלן אחד אחראי לכל המערכות הקריטיות שלכם – התקנה, שדרוגים, בדיקות ותחזוקה שוטפת. אנחנו מבטיחים רציפות תפעולית, תיעוד מסודר ותגובה מהירה בכל שלב.</p>
+    </div>
+    <div class="index-services-grid">
+      <div class="index-services-card">
+        <div class="index-services-card-header">
+          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.69L12 21.31M12 2.69C10.5 4.5 9 7 9 10C9 13 10.34 15 12 15C13.66 15 15 13 15 10C15 7 13.5 4.5 12 2.69Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <h3>תשתיות אינסטלציה</h3>
+        </div>
+        <p>עמודי הזנה, קווים ראשיים, ויסות לחץ והפחתת נזילות.<br>התקנת מערכות מים חמים וקרים בכל קנה מידה.<br>שדרוג צנרת ישנה והתאמה לתקינה עדכנית.</p>
+      </div>
+      <div class="index-services-card">
+        <div class="index-services-card-header">
+          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L9.5 7L4 8L8 12L7 17.5L12 15L17 17.5L16 12L20 8L14.5 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12 8V15M9 11L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <h3>מערכות כיבוי אש</h3>
+        </div>
+        <p>התקנת מערכות ספרינקלרים תעשייתיים, שסתומים ותיאום משאבות.<br>בדיקות תקופתיות ותחזוקה מונעת למערכות קיימות.<br>תיעוד מלא של כל מרכיבי המערכת והיסטוריית תחזוקה.</p>
+      </div>
+      <div class="index-services-card">
+        <div class="index-services-card-header">
+          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 6V12L16 14M22 12C22 17.523 17.523 22 12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <h3>תחזוקה ושירות</h3>
+        </div>
+        <p>תוכניות תחזוקה מונעת מותאמות אישית לכל מתקן.<br>תיאום תגובה מהירה לקריאות חירום ותקלות דחופות.<br>ניהול תיעוד דיגיטלי ומעקב אחר כל פעולת שירות.</p>
+      </div>
+      <div class="index-services-card">
+        <div class="index-services-card-header">
+          <svg data-element-type="icon" data-icon-type="svg" class="index-services-card-icon" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12L11 14L15 10M21 12C21 16.971 16.971 21 12 21C7.029 21 3 16.971 3 12C3 7.029 7.029 3 12 3C16.971 3 21 7.029 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <h3>בדיקות ותמיכה בעמידה בתקן</h3>
+        </div>
+        <p>הכנה לביקורות ובדיקות רגולטוריות של מערכות אש ומים.<br>ביצוע פעולות מתקנות ותיקון ליקויים שנמצאו.<br>עדכון תוכניות as-built ותיעוד טכני מלא לכל שינוי.</p>
+      </div>
+    </div>
+  </div>
+  <div class="index-services-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 60" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="dotted-grain-services" x="0" y="0" width="4" height="4" patternunits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="0.5" fill="rgba(226,216,203,0.4)"></circle>
+        </pattern>
+      </defs>
+      <path d="M0,60 L0,30 L1200,50 L1200,60 Z" fill="#FAF6F0"></path>
+      <path d="M0,60 L0,30 L1200,50 L1200,60 Z" fill="#FAF6F0"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="index-case-studies-section" data-layout-spec="בית-case-studies">
+  <div class="index-case-studies-container">
+    <div class="index-case-studies-content">
+      <h2>עבודה שנשארת מוכנה</h2>
+      <p class="index-case-studies-intro">אנחנו לא רק מתקינים ועוזבים. אנחנו בונים מערכות שנשארות מוכנות, עובדות ומתוחזקות לאורך שנים. כל פרויקט הוא התחלה של שותפות ארוכת טווח, לא סיום של עסקה חד-פעמית.</p>
+      
+      <div class="index-case-studies-snapshots">
+        <div class="index-case-studies-snapshot-card">
+          <h3>ייצוב מערכת לאחר בעיות לחץ</h3>
+          <p>בניין משרדים בן 8 קומות סבל מתנודות לחץ חוזרות במערכת המים. ביצענו אבחון מעמיק, החלפנו רכיבי ויסות ובנינו תוכנית תחזוקה מונעת. התוצאה: אפס תקלות בשנתיים האחרונות, והדיירים חוזרים לשגרה רגועה.</p>
+        </div>
+        
+        <div class="index-case-studies-snapshot-card">
+          <h3>שיפוץ אזור ספרינקלרים בהפרעה מינימלית</h3>
+          <p>מרכז מסחרי פעיל דרש שדרוג מערכת הכיבוי מבלי לסגור חנויות. תכננו עבודה בשלבים, ביצענו בשעות לילה ובסופי שבוע, והשלמנו את הפרויקט בזמן ובתקציב. המערכת עברה בדיקות משרד הפנים בהצלחה מלאה.</p>
+        </div>
+        
+        <div class="index-case-studies-snapshot-card">
+          <h3>תוכנית תחזוקה מונעת לבניין רב-דיירים</h3>
+          <p>בניין מגורים בן 40 יחידות קיבל תוכנית תחזוקה שנתית מותאמת: בדיקות תקופתיות, ניקוי מערכות, החלפת אטמים וזיהוי מוקדם של בעיות. הוועד חוסך בעלויות תיקון חירום ותושבים נהנים משקט נפשי.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="index-case-studies-imagery">
+      <div class="index-case-studies-image-grid">
+        <img data-placeholder="index-case-studies-image-1" data-context="Close-up of a professional fire sprinkler head installed in a commercial ceiling, showing clean installation with proper spacing and modern chrome finish, well-lit with natural light, technical photography style" width="280" height="280" src="/assets/site-index-case-studies-image-1.webp" alt="ראש ספרינקלר מותקן במקצועיות">
+        
+        <img data-placeholder="index-case-studies-image-2" data-context="Clean and organized plumbing valve set with pressure gauges and copper pipes in a utility room, labeled pipes, professional installation, warm lighting, industrial photography" width="280" height="280" src="/assets/site-index-case-studies-image-2.webp" alt="מערכת שסתומים מסודרת ומתויגת">
+        
+        <img data-placeholder="index-case-studies-image-3" data-context="Professional plumber or technician in work uniform checking fire safety equipment on-site, wearing safety vest, holding clipboard, commercial building background, natural daylight" width="280" height="280" src="/assets/site-index-case-studies-image-3.webp" alt="טכנאי בודק מערכות בטיחות באתר">
+        
+        <img data-placeholder="index-case-studies-image-4" data-context="Labeled copper and PVC pipes running along a utility corridor ceiling, color-coded tags, organized cable management, clean industrial environment, professional plumbing installation" width="280" height="280" src="/assets/site-index-case-studies-image-4.webp" alt="צנרת מתויגת במסדרון תשתיות">
+      </div>
+    </div>
+  </div>
+  
+  <div class="index-case-studies-divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 80" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 L0,50 Q200,45 400,50 T800,50 Q1000,45 1200,50 L1200,80 Z" fill="#FAF6F0"></path>
+    </svg>
+  </div>
+</section>
+
+<section class="index-faq-section" data-layout-spec="בית-faq">
+  <div class="index-faq-section__container">
+    <div class="index-faq-section__header">
+      <h2>שאלות נפוצות</h2>
+      <p>תשובות לשאלות שמנהלי בניינים ועסקים שואלים אותנו לעיתים קרובות על שירותי האינסטלציה ומערכות בטיחות האש שלנו</p>
+    </div>
+
+    <div class="index-faq-section__content-wrapper">
+      <div class="index-faq-section__accordion-container">
+        <div class="index-faq-section__accordion-item">
+          <button class="index-faq-section__accordion-trigger" aria-expanded="false">
+            <span class="index-faq-section__question">מהם זמני התגובה ואיזורי השירות שלכם?</span>
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <div class="index-faq-section__accordion-content">
+            <p>אנחנו מספקים שירות מהיר באזור המרכז והשפלה, עם זמן תגובה של עד 4 שעות במקרי חירום. לשירותי תחזוקה שוטפת אנחנו מתאמים מראש ומגיעים בזמן המדויק שנקבע. השירות שלנו זמין 24/7 למצבי חירום קריטיים.</p>
+          </div>
+        </div>
+
+        <div class="index-faq-section__accordion-item">
+          <button class="index-faq-section__accordion-trigger" aria-expanded="false">
+            <span class="index-faq-section__question">מה כולל ביקורת תקופתית של מערכות האינסטלציה ובטיחות האש?</span>
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <div class="index-faq-section__accordion-content">
+            <p>הביקורת התקופתית שלנו כוללת בדיקה מקיפה של כל רכיבי המערכת: בדיקת לחצים ואיטום, בדיקת שסתומים ומשאבות, בדיקת מערכות גילוי עשן וספרינקלרים, וודוא תקינות חיבורים חשמליים. אנחנו גם בודקים את מערכות הניקוז ומזהים בעיות פוטנציאליות לפני שהן הופכות לתקלות רציניות.</p>
+          </div>
+        </div>
+
+        <div class="index-faq-section__accordion-item">
+          <button class="index-faq-section__accordion-trigger" aria-expanded="false">
+            <span class="index-faq-section__question">איך מתועדות פעולות תיקון ותחזוקה?</span>
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <div class="index-faq-section__accordion-content">
+            <p>כל פעולה מתועדת בדו"ח מפורט שכולל תיאור הבעיה, הפעולות שבוצעו, חלקים שהוחלפו, ותמונות לפני ואחרי. אתם מקבלים העתק דיגיטלי של הדו"ח באותו יום, והמסמכים נשמרים גם במערכת שלנו לצורך מעקב היסטורי. זה חשוב במיוחד לעמידה בתקנות ובדיקות ביטוח.</p>
+          </div>
+        </div>
+
+        <div class="index-faq-section__accordion-item">
+          <button class="index-faq-section__accordion-trigger" aria-expanded="false">
+            <span class="index-faq-section__question">איך מתואם השירות עם הנהלת הבניין?</span>
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <div class="index-faq-section__accordion-content">
+            <p>אנחנו עובדים בשיתוף פעולה הדוק עם מנהלי הבניינים ומתאמים כל ביקור מראש. לפני עבודות תחזוקה אנחנו שולחים הודעה מוקדמת, ובסיום העבודה אנחנו מוודאים שהכל תקין ומסודר. במקרה של תקלה דחופה אנחנו מעדכנים בזמן אמת ומסבירים את הפעולות הנדרשות.</p>
+          </div>
+        </div>
+
+        <div class="index-faq-section__accordion-item">
+          <button class="index-faq-section__accordion-trigger" aria-expanded="false">
+            <span class="index-faq-section__question">מהם הסימנים לבעיות לחץ או שסתומים במערכת?</span>
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <div class="index-faq-section__accordion-content">
+            <p>סימנים מרכזיים כוללים: לחץ מים חלש או משתנה בברזים, רעשים יוצאי דופן בצנרת, טפטוף מתמיד מברזים, כתמי רטיבות בקירות או תקרות, ועליית חשבון מים פתאומית. אם אתם מזהים אחד מהסימנים האלה, כדאי לפנות אלינו מיד לבדיקה מקצועית.</p>
+          </div>
+        </div>
+
+        <div class="index-faq-section__accordion-item">
+          <button class="index-faq-section__accordion-trigger" aria-expanded="false">
+            <span class="index-faq-section__question">איך שומרים על תקינות המערכות לאורך כל השנה?</span>
+            <svg class="index-faq-section__icon" data-element-type="icon" data-icon-type="svg" width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <div class="index-faq-section__accordion-content">
+            <p>אנחנו ממליצים על תוכנית תחזוקה מונעת שכוללת ביקורות רבעוניות, ניקוי מערכות ניקוז לפני החורף, בדיקת מערכות כיבוי אש פעמיים בשנה, והחלפת רכיבים בלאי לפי לוח זמנים. התוכנית הזו מבטיחה עמידה בתקנות, מונעת תקלות יקרות, ומאריכה את חיי המערכות.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="index-faq-section__side-note">
+        <h3>מה להכין לפני הביקור</h3>
+        <p>כדי שהביקור שלנו יהיה יעיל ומהיר, כדאי להכין מראש:</p>
+        <ul>
+          <li>גישה לחדר השסתומים הראשי ולמחסן הטכני</li>
+          <li>דו"חות בדיקה אחרונים (אם קיימים)</li>
+          <li>רשימת אזורים בעייתיים או תקלות חוזרות</li>
+          <li>איש קשר זמין באתר שמכיר את המערכות</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <div class="index-faq-section__divider-wrapper">
+    <svg data-no-icon-edit="true" aria-hidden="true" viewbox="0 0 1200 100" preserveaspectratio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="faq-divider-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#FAF6F0;stop-opacity:1"></stop>
+          <stop offset="60%" style="stop-color:#EFE7DC;stop-opacity:1"></stop>
+          <stop offset="100%" style="stop-color:#3A3530;stop-opacity:1"></stop>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1200" height="100" fill="url(#faq-divider-gradient)"></rect>
+      <line x1="0" y1="96" x2="1200" y2="96" stroke="#CFA23E" stroke-width="2" opacity="0.6"></line>
+    </svg>
+  </div>
+</section>
+
+<section class="index-cta-section" data-layout-spec="בית-cta">
+  <div class="index-cta-container">
+    <h2 class="index-cta-heading">שמרו על הבניין שלכם בטוח ומתוחזק</h2>
+    <p class="index-cta-description">אנו מזמינים מנהלי בניינים וצוותי תחזוקה לבקש הערכה מקצועית או תוכנית תחזוקה מותאמת. עם ניסיון רב שנים במערכות אינסטלציה ובטיחות אש, אנו מבטיחים שירות אמין ומקצועי.</p>
+    <div class="index-cta-buttons">
+      <a href="/contact" class="btn-primary index-cta-btn-primary">צור קשר</a>
+      <a href="/services" class="btn-secondary index-cta-btn-secondary">גלה את השירותים</a>
+    </div>
+    <p class="index-cta-reassurance">תיעוד ברור, מעקב עקבי והמלצות מעשיות</p>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-column company-info">
+        <img src="/assets/business-logo.webp" alt="מרון פרויקטים ומערכות" class="logo">
+        <p class="company-description">מומחים באינסטלציה ובטיחות אש עם ניסיון רב שנים בפרויקטים מורכבים</p>
+      </div>
+      
+      <div class="footer-column quick-links">
+        <h3>קישורים מהירים</h3>
+        <ul>
+          <li><a href="/services">שירותים</a></li>
+          <li><a href="/projects">פרויקטים</a></li>
+          <li><a href="/contact">צור קשר</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column contact-info">
+        <h3>צור קשר</h3>
+        <ul>
+          <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:[business_email]">[business_email]</a>
+          </li>
+          <li>
+            <i class="fas fa-phone"></i>
+            <a href="tel:[business_phone]">[business_phone]</a>
+          </li>
+          <li><a href="/"><i class="fas fa-map-marker-alt"></i>
+            <span>[business_address]</span></a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-column social-media">
+        <h3>עקבו אחרינו</h3>
+        <div class="social-links">
+          <a href="[facebook_handle]" aria-label="Facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+          <a href="[instagram_handle]" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+          <a href="[whatsapp_handle]" aria-label="WhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>© 2026 מרון פרויקטים ומערכות. כל הזכויות שמורות.</p>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy">מדיניות פרטיות</a>
+        <span class="separator">|</span>
+        <a href="/terms">תנאי שימוש</a>
+        <span class="separator">|</span>
+        <a href="/accessibility">נגישות</a>
+        <span class="separator">|</span>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">נוצר באמצעות Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>
