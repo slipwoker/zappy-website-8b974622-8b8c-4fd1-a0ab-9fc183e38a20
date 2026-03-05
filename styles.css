@@ -5847,6 +5847,185 @@ body.accessibility-widget-visible ._access-menu {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   V2 REGENERATED SECTION CSS (בית-services)
+   Added: 2026-03-05T20:51:55.686Z
+   ═══════════════════════════════════════════════════════════ */
+.index-services-section {
+  position: relative;
+  background: linear-gradient(180deg, #FAF6F0 0%, #EFE7DC 100%);
+  color: var(--text-dark);
+  padding: 80px 16px;
+  overflow: visible;
+}
+
+.index-services-section .index-services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.index-services-section .index-services-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.index-services-section .index-services-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.index-services-section .index-services-intro {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--text-dark);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.index-services-section .index-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-top: 48px;
+}
+
+.index-services-section .index-services-card {
+  background: rgba(247, 243, 237, 0.72);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(226, 216, 203, 0.75);
+  padding: 32px 24px;
+  text-align: right;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.index-services-section .index-services-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+
+.index-services-section .index-services-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 34px rgba(45, 43, 40, 0.14);
+}
+
+.index-services-section .index-services-card:hover::before {
+  transform: scaleX(1);
+}
+
+.index-services-section .index-services-card-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 0 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(74, 124, 155, 0.12) 0%, rgba(201, 106, 74, 0.08) 100%);
+  border-radius: 12px;
+  color: var(--primary);
+  transition: all 0.3s ease;
+}
+
+.index-services-section .index-services-card:hover .index-services-card-icon {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, rgba(74, 124, 155, 0.18) 0%, rgba(201, 106, 74, 0.12) 100%);
+}
+
+.index-services-section .index-services-card-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.index-services-section .index-services-card h3 {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--primary);
+  margin-bottom: 14px;
+}
+
+.index-services-section .index-services-card p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--text-dark);
+}
+
+.index-services-section .index-services-decorative-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+.index-services-section .index-services-decorative-shape {
+  width: 100%;
+  height: 100%;
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .index-services-section {
+    padding: 60px 16px;
+  }
+
+  .index-services-section .index-services-header {
+    margin-bottom: 40px;
+  }
+
+  .index-services-section .index-services-header h2 {
+    font-size: 26px;
+  }
+
+  .index-services-section .index-services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .index-services-section .index-services-card {
+    padding: 24px 20px;
+  }
+
+  .index-services-section .index-services-card-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .index-services-section .index-services-card-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .index-services-section .index-services-decorative-wrapper {
+    width: 280px;
+    height: 280px;
+    opacity: 0.25;
+  }
+}
+
 /* ========== RTL MOBILE NAVBAR FIX (zappy-rtl-mobile-fix) ========== */
 /* High-specificity rules to ensure RTL positioning wins over any [lang="en"] conflicts */
 /* For RTL sites: hamburger on RIGHT, phone on LEFT (mirror of LTR layout) */
